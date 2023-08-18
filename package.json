@@ -9,10 +9,17 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "1.18.2",
+    "@react-native-community/netinfo": "9.3.10",
+    "@react-native-firebase/analytics": "^18.3.0",
+    "@react-native-firebase/app": "^18.3.0",
+    "@react-native-firebase/auth": "^18.3.0",
+    "@react-native-firebase/firestore": "^18.3.0",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "expo": "~49.0.7",
     "expo-status-bar": "~1.6.0",
+    "firebase": "^9.13.0",
     "react": "18.2.0",
     "react-native": "0.72.3",
     "react-native-gifted-chat": "^2.4.0",

@@ -1,11 +1,38 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Button, TextInput, ImageBackground, TouchableOpacity, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  ImageBackground,
+  TouchableOpacity,
+  Dimensions,
+  Alert,
+} from 'react-native';
+import { getAuth, signInAnonymously } from 'firebase/auth';
 
 const Start = ({ navigation }) => {
-  const [name, setName] = useState(' ');
+  const [name, setName] = useState('');
   const [selectedColor, setSelectedColor] = useState('#090C08');
 
   const colorOptions = ['#090C08', '#474056', '#8A95A5', '#B9C6AE'];
+
+  const handleStartChatting = () => {
+    const auth = getAuth();
+    signInAnonymously(auth)
+      .then((result) => {
+        // Navigate to the Chat screen with user ID, name, and color
+        navigation.navigate('Chat', {
+          userId: result.user.uid,
+          name: name || 'User',
+          bgColor: selectedColor || 'white',
+        });
+        Alert.alert('Signed in successfully!');
+      })
+      .catch((error) => {
+        Alert.alert('Unable to sign in, try again later.');
+      });
+  };
 
   return (
     <ImageBackground
@@ -19,8 +46,8 @@ const Start = ({ navigation }) => {
             style={styles.textInput}
             value={name}
             onChangeText={setName}
-            placeholder='Your name'
-            placeholderTextColor='rgba(117, 112, 131, 0.5)'
+            placeholder="Your name"
+            placeholderTextColor="rgba(117, 112, 131, 0.5)"
           />
           <Text style={styles.chooseColorText}>Choose Background Color</Text>
           <View style={styles.colorOptionsContainer}>
@@ -41,7 +68,7 @@ const Start = ({ navigation }) => {
           </View>
           <TouchableOpacity
             style={styles.startChattingButton}
-            onPress={() => navigation.navigate('Chat', { name: name, bgColor: selectedColor })}
+            onPress={handleStartChatting}
           >
             <Text style={styles.startChattingButtonText}>Start Chatting</Text>
           </TouchableOpacity>
@@ -49,7 +76,7 @@ const Start = ({ navigation }) => {
       </View>
     </ImageBackground>
   );
-}
+};
 
 const window = Dimensions.get('window');
 
@@ -58,25 +85,25 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   container: {
     flex: 1,
-    justifyContent: 'flex-start', // Align the title to the top
+    justifyContent: 'center',
     alignItems: 'center',
-    width: '88%',
+    width: '100%',
+    marginTop: 'auto', // Push the title to the center
   },
   appTitle: {
     fontSize: 45,
     fontWeight: '600',
     color: '#FFFFFF',
-    marginTop: 60, // Move the title up
-    marginBottom: 260,
+    marginTop: 'auto', // Push the title to the center
   },
   inputContainer: {
     backgroundColor: '#FFFFFF',
     width: '88%',
-    height: window.height * 0.44,
+    height: '35%',
     justifyContent: 'space-between',
     paddingVertical: 20,
     paddingHorizontal: 20,
@@ -84,7 +111,8 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 5,
+    marginTop: 'auto', // Push the container to the bottom
+    marginBottom: '12%', // Add 12% margin from the bottom
   },
   textInput: {
     fontSize: 16,
@@ -98,7 +126,6 @@ const styles = StyleSheet.create({
   },
   colorOptionsContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: 15,
   },
   colorOption: {
@@ -107,6 +134,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginHorizontal: 10,
     borderWidth: 0,
+    textAlign: 'center',   // Center the text horizontally
+    alignItems: 'center',
   },
   chooseColorText: {
     fontSize: 16,
@@ -114,7 +143,9 @@ const styles = StyleSheet.create({
     color: '#757083',
     opacity: 1,
     marginBottom: 15,
-  },
+    textAlign: 'center',   // Center the text horizontally
+    alignItems: 'center',  // Center the text vertically
+  },  
   startChattingButton: {
     backgroundColor: '#757083',
     borderRadius: 5,
@@ -129,4 +160,3 @@ const styles = StyleSheet.create({
 });
 
 export default Start;
-
