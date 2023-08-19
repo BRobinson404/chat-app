@@ -7,18 +7,9 @@ const Chat = ({ route, navigation, db }) => {
   const { name, bgColor, userId } = route.params;
   const [messages, setMessages] = useState([]);
 
-  const onSend = async (newMessages, retries = 3) => {
-    try {
-      await addDoc(collection(db, "messages"), newMessages[0]);
-    } catch (error) {
-      if (retries > 0) {
-        // Retry the operation after a delay
-        setTimeout(() => onSend(newMessages, retries - 1), 1000); // Retry after 1 second
-      } else {
-        console.error('Failed to send message after retries', error);
-      }
-    }
-  };
+  const onSend = (newMessages) => {
+    addDoc(collection(db, "messages"), newMessages[0])
+  }
 
   const renderBubble = (props) => {
     return <Bubble
@@ -38,27 +29,22 @@ const Chat = ({ route, navigation, db }) => {
 
   useEffect(() => {
     navigation.setOptions({ title: name });
-
     const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
-
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const loadedMessages = snapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          _id: doc.id,
-          text: data.text,
-          createdAt: data.createdAt.toDate(),
-          user: {
-            _id: data.user._id,
-            name: data.user.name,
-          },
-        };
-      });
-      setMessages(loadedMessages);
-    });
-
-    return () => unsubscribe(); // Clean up the listener when the component unmounts
-  }, [db, name, navigation]);
+    const unsubMessages = onSnapshot(q, (docs) => {
+      let newMessages = [];
+      docs.forEach(doc => {
+        newMessages.push({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: new Date(doc.data().createdAt.toMillis())
+        })
+      })
+      setMessages(newMessages);
+    })
+    return () => {
+      if (unsubMessages) unsubMessages();
+    }
+   }, []);
 
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>

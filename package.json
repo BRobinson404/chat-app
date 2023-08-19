@@ -19,7 +19,7 @@
     "@react-navigation/native-stack": "^6.9.13",
     "expo": "~49.0.7",
     "expo-status-bar": "~1.6.0",
-    "firebase": "^9.13.0",
+    "firebase": "^9.23.0",
     "react": "18.2.0",
     "react-native": "0.72.3",
     "react-native-gifted-chat": "^2.4.0",
