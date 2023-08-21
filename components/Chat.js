@@ -107,6 +107,25 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       <Text style={{ color: bgColor === '#090C08' ? 'white' : 'black' }}>
         Welcome to Chat-app!
       </Text>
+        <GiftedChat
+          messages={messages}
+          renderBubble={renderBubble}
+          onSend={onSend}
+          user={{
+            _id: userId,
+            name: name,
+          }}
+          renderInputToolbar={props =>
+            isConnected ? <InputToolbar {...props} /> : null // Render InputToolbar only if isConnected is true
+          }
+        />
+        {!isConnected && (
+          <Text style={{ color: 'red' }}>Offline: Cannot compose new messages.</Text>
+          // Display offline message below the GiftedChat
+        )}  
+      {Platform.OS === 'android' ? (
+        <KeyboardAvoidingView behavior="height" />
+      ) : null}
     </View>
   );
 };
