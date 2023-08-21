@@ -40,6 +40,8 @@ const Chat = ({ route, navigation, db, isConnected }) => {
   useEffect(() => {
     navigation.setOptions({ title: name });
 
+    let unsubMessages;
+
     // Function to fetch messages from Firestore
     const fetchMessagesFromFirestore = async () => {
       const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
@@ -97,8 +99,10 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       );
 
       return () => {
-        unsubMessages();
+        unsubMessages(); // Unsubscribe the listener on cleanup
       };
+    } else {
+      loadCachedMessages(); // Call the function for offline mode
     }
   }, [db, isConnected, navigation]);
 
