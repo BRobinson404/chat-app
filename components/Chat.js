@@ -10,8 +10,10 @@ import {
   getDocs,
 } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import MapView from 'react-native-maps';
+import CustomActions from './CustomActions.js';
 
-const Chat = ({ route, navigation, db, isConnected }) => {
+const Chat = ({ route, navigation, db, isConnected, storage }) => {
   const { name, bgColor, userId } = route.params;
   const [messages, setMessages] = useState([]);
 
@@ -20,6 +22,31 @@ const Chat = ({ route, navigation, db, isConnected }) => {
   const onSend = (newMessages) => {
     addDoc(collection(db, 'messages'), newMessages[0]);
   };
+
+  const renderCustomActions = (props) => {
+    return <CustomActions  userId={userId} storage={storage} {...props} />;
+  };
+
+  const renderCustomView = (props) => {
+    const { currentMessage} = props;
+    if (currentMessage.location) {
+      return (
+          <MapView
+            style={{width: 150,
+              height: 100,
+              borderRadius: 13,
+              margin: 3}}
+            region={{
+              latitude: currentMessage.location.latitude,
+              longitude: currentMessage.location.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
+      );
+    }
+    return null;
+  }
 
   const renderBubble = (props) => {
     return <Bubble
@@ -39,26 +66,29 @@ const Chat = ({ route, navigation, db, isConnected }) => {
 
   useEffect(() => {
     navigation.setOptions({ title: name });
+  
 
-    let unsubMessages;
-
+  
     // Function to fetch messages from Firestore
     const fetchMessagesFromFirestore = async () => {
       const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
       const querySnapshot = await getDocs(q);
-
+  
       const newMessages = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
         createdAt: new Date(doc.data().createdAt.toMillis()),
       }));
-
-      setMessages(newMessages);
-
+  
+      // Sort the new messages based on createdAt timestamp
+      const sortedMessages = newMessages.sort((a, b) => b.createdAt - a.createdAt);
+  
+      setMessages(sortedMessages);
+  
       // Cache the fetched messages in AsyncStorage
-      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(newMessages));
+      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(sortedMessages));
     };
-
+  
     // Load cached messages from local storage
     const loadCachedMessages = async () => {
       try {
@@ -70,13 +100,13 @@ const Chat = ({ route, navigation, db, isConnected }) => {
         console.error('Error loading cached messages:', error);
       }
     };
-
+  
     if (isConnected) {
       fetchMessagesFromFirestore();
     } else {
       loadCachedMessages();
     }
-
+  
     // Subscribe to real-time updates when there's a connection
     if (isConnected) {
       const unsubMessages = onSnapshot(
@@ -85,19 +115,22 @@ const Chat = ({ route, navigation, db, isConnected }) => {
           const newMessages = [];
           querySnapshot.forEach((doc) => {
             newMessages.push({
-            id: doc.id,
-            ...doc.data(),
-            createdAt: new Date(doc.data().createdAt.toMillis()),
-          })
-        });
-
-          setMessages(newMessages);
-
+              id: doc.id,
+              ...doc.data(),
+              createdAt: new Date(doc.data().createdAt.toMillis()),
+            });
+          });
+  
+          // Sort the new messages based on createdAt timestamp
+          const sortedMessages = newMessages.sort((a, b) => b.createdAt - a.createdAt);
+  
+          setMessages(sortedMessages);
+  
           // Cache the updated messages in AsyncStorage
-          AsyncStorage.setItem(CACHE_KEY, JSON.stringify(newMessages));
+          AsyncStorage.setItem(CACHE_KEY, JSON.stringify(sortedMessages));
         }
       );
-
+  
       return () => {
         unsubMessages(); // Unsubscribe the listener on cleanup
       };
@@ -105,6 +138,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       loadCachedMessages(); // Call the function for offline mode
     }
   }, [db, isConnected, navigation]);
+  
 
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>
@@ -112,9 +146,12 @@ const Chat = ({ route, navigation, db, isConnected }) => {
         Welcome to Chat-app!
       </Text>
         <GiftedChat
+          renderActions={renderCustomActions}
+          renderCustomView={renderCustomView}
           messages={messages}
+          storage={storage}
           renderBubble={renderBubble}
-          onSend={onSend}
+          onSend={messages => onSend(messages)}
           user={{
             _id: userId,
             name: name,
@@ -138,6 +175,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  logoutButton: {
+    position: "absolute",
+    right: 0,
+    top: 0,
+    backgroundColor: "#C00",
+    padding: 10,
+    zIndex: 1
+  },
+  logoutButtonText: {
+    color: "#FFF",
+    fontSize: 10
+  }
 });
 
 export default Chat;
