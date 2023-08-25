@@ -23,7 +23,7 @@ const Start = ({ navigation }) => {
       .then((result) => {
         // Navigate to the Chat screen with user ID, name, and color
         navigation.navigate('Chat', {
-          userId: result.user.uid,
+          userID: result.user.uid,
           name: name || 'User',
           bgColor: selectedColor || 'white',
         });

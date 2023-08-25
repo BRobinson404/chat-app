@@ -4,7 +4,7 @@ import * as Location from 'expo-location';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userId }) => {
+const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userID }) => {
   const actionSheet = useActionSheet();
 
   const onActionPress = () => {
@@ -68,27 +68,46 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userId })
     // this will get the file name from the uri
     const imageName = uri.split("/")[uri.split("/").length - 1];
     const timeStamp = (new Date()).getTime();
-    return `${userId}-${timeStamp}-${imageName}`;
+    return `${userID}-${timeStamp}-${imageName}`;
   }
 
   const uploadAndSendImage = async (imageURI) => {
+    console.log("Starting uploadAndSendImage function");
+  
     try {
-      const response = await fetch(imageURI);
-      const blob = await response.blob();
-  
+      console.log("Generating unique reference string...");
       const uniqueRefString = generateReference(imageURI);
+      console.log("Generated uniqueRefString:", uniqueRefString);
+  
+      console.log("Creating new upload reference...");
       const newUploadRef = ref(storage, uniqueRefString);
+      console.log("New upload reference created:", newUploadRef);
   
-      // Use the put method to upload the blob
-      const snapshot = await uploadBytes(newUploadRef, blob);
+      console.log("Fetching image data...");
+      const response = await fetch(imageURI);
+      console.log("Image data fetched:", response);
   
-      const imageURL = await getDownloadURL(snapshot.ref);
-      onSend({ image: imageURL });
+      console.log("Converting response data to blob...");
+      const blob = await response.blob();
+      console.log("Blob created:", blob);
+  
+      console.log("Uploading blob to storage...");
+      uploadBytes(newUploadRef, blob).then(async (snapshot) => {
+        console.log("Blob uploaded:", snapshot);
+  
+        console.log("Getting download URL for the uploaded blob...");
+        const imageURL = await getDownloadURL(snapshot.ref);
+        console.log("Download URL obtained:", imageURL);
+  
+        console.log("Calling onSend function with image URL...");
+        onSend({ image: imageURL });
+  
+        console.log("uploadAndSendImage function completed successfully");
+      });
     } catch (error) {
-      console.error('Error during upload:', error);
+      console.error("Error during uploadAndSendImage function:", error);
     }
   };
-  
   
 
   return (

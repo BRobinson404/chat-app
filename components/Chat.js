@@ -14,7 +14,7 @@ import MapView from 'react-native-maps';
 import CustomActions from './CustomActions.js';
 
 const Chat = ({ route, navigation, db, isConnected, storage }) => {
-  const { name, bgColor, userId } = route.params;
+  const { name, bgColor, userID } = route.params;
   const [messages, setMessages] = useState([]);
 
   const CACHE_KEY = 'cachedMessages'; // Key for caching messages in AsyncStorage
@@ -24,7 +24,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
   };
 
   const renderCustomActions = (props) => {
-    return <CustomActions  userId={userId} storage={storage} {...props} />;
+    return <CustomActions  userID={userID} storage={storage} {...props} />;
   };
 
   const renderCustomView = (props) => {
@@ -153,7 +153,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
           renderBubble={renderBubble}
           onSend={messages => onSend(messages)}
           user={{
-            _id: userId,
+            _id: userID,
             name: name,
           }}
           renderInputToolbar={props =>
