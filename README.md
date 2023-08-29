@@ -29,7 +29,11 @@ Chat-App is a simple and user-friendly mobile application that allows users to e
   </div>
 
 - **Location Sharing:** Users can share their current location with contacts to show where they are.
+- ![image](https://github.com/BRobinson404/chat-app/assets/122922678/036e164c-7d1b-4ae3-954a-6a0a3a9c8e7a)
+
 - **Offline Access:** Messages are stored locally and online, allowing users to access conversations even when offline.
+- ![image](https://github.com/BRobinson404/chat-app/assets/122922678/20851a46-62a5-4e1b-9a00-4f57bcecf329)
+
 - **Accessibility:** The app is designed to be compatible with screen readers, ensuring an inclusive chat experience for users with visual impairments.
 
 ## Getting Started
