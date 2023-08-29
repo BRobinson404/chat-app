@@ -23,7 +23,7 @@ Chat-App is a simple and user-friendly mobile application that allows users to e
 
 - **Image Sharing:** Users can send images to their contacts to share moments and experiences.
 
-  <div style="display: flex; justify-content: space-between;">
+  <div style="display: flex">
     <img src="https://github.com/BRobinson404/chat-app/assets/122922678/2f9750fc-37bd-4084-b3c8-a99c2548edb1" alt="Image Sharing 1" style="width: 48%;">
     <img src="https://github.com/BRobinson404/chat-app/assets/122922678/b5366319-8088-491f-ad2f-c16e2eee5ed6" alt="Image Sharing 2" style="width: 48%;">
   </div>
