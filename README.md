@@ -22,18 +22,19 @@ Chat-App is a simple and user-friendly mobile application that allows users to e
   ![Conversation Interface](https://github.com/BRobinson404/chat-app/assets/122922678/9f65b1d3-5afa-4b28-a50f-d724ac8fd8ff)
 
 - **Image Sharing:** Users can send images to their contacts to share moments and experiences.
-  
-  <div style="display: flex; flex-direction: row;">
-  <img src="https://github.com/BRobinson404/chat-app/assets/122922678/2f9750fc-37bd-4084-b3c8-a99c2548edb1" alt="Image Sharing 1" width="50%">
-  <img src="https://github.com/BRobinson404/chat-app/assets/122922678/b5366319-8088-491f-ad2f-c16e2eee5ed6" alt="Image Sharing 2" width="50%">
-</div>
 
+  <div style="display: flex; justify-content: space-between;">
+    <img src="https://github.com/BRobinson404/chat-app/assets/122922678/2f9750fc-37bd-4084-b3c8-a99c2548edb1" alt="Image Sharing 1" style="width: 48%;">
+    <img src="https://github.com/BRobinson404/chat-app/assets/122922678/b5366319-8088-491f-ad2f-c16e2eee5ed6" alt="Image Sharing 2" style="width: 48%;">
+  </div>
 
 - **Location Sharing:** Users can share their current location with contacts to show where they are.
-- ![image](https://github.com/BRobinson404/chat-app/assets/122922678/036e164c-7d1b-4ae3-954a-6a0a3a9c8e7a)
+  
+  ![Location Sharing](https://github.com/BRobinson404/chat-app/assets/122922678/036e164c-7d1b-4ae3-954a-6a0a3a9c8e7a)
 
 - **Offline Access:** Messages are stored locally and online, allowing users to access conversations even when offline.
-- ![image](https://github.com/BRobinson404/chat-app/assets/122922678/20851a46-62a5-4e1b-9a00-4f57bcecf329)
+  
+  ![Offline Access](https://github.com/BRobinson404/chat-app/assets/122922678/20851a46-62a5-4e1b-9a00-4f57bcecf329)
 
 - **Accessibility:** The app is designed to be compatible with screen readers, ensuring an inclusive chat experience for users with visual impairments.
 
@@ -53,4 +54,6 @@ To get started with Chat-App, follow these steps:
 - React Native
 - Firebase
 - Expo SDK
+- ...
+
 - ...
