@@ -72,41 +72,14 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userID })
   }
 
   const uploadAndSendImage = async (imageURI) => {
-    console.log("Starting uploadAndSendImage function");
-  
-    try {
-      console.log("Generating unique reference string...");
-      const uniqueRefString = generateReference(imageURI);
-      console.log("Generated uniqueRefString:", uniqueRefString);
-  
-      console.log("Creating new upload reference...");
-      const newUploadRef = ref(storage, uniqueRefString);
-      console.log("New upload reference created:", newUploadRef);
-  
-      console.log("Fetching image data...");
-      const response = await fetch(imageURI);
-      console.log("Image data fetched:", response);
-  
-      console.log("Converting response data to blob...");
-      const blob = await response.blob();
-      console.log("Blob created:", blob);
-  
-      console.log("Uploading blob to storage...");
-      uploadBytes(newUploadRef, blob).then(async (snapshot) => {
-        console.log("Blob uploaded:", snapshot);
-  
-        console.log("Getting download URL for the uploaded blob...");
-        const imageURL = await getDownloadURL(snapshot.ref);
-        console.log("Download URL obtained:", imageURL);
-  
-        console.log("Calling onSend function with image URL...");
-        onSend({ image: imageURL });
-  
-        console.log("uploadAndSendImage function completed successfully");
-      });
-    } catch (error) {
-      console.error("Error during uploadAndSendImage function:", error);
-    }
+    const uniqueRefString = generateReference(imageURI)
+    const newUploadRef = ref(storage, uniqueRefString)
+    const response = await fetch(imageURI)
+    const blob = await response.blob()
+    uploadBytes(newUploadRef, blob).then(async (snapshot) => {
+      const imageURL = await getDownloadURL(snapshot.ref)
+      onSend({ image: imageURL })
+    })
   };
   
 
