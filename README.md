@@ -23,10 +23,11 @@ Chat-App is a simple and user-friendly mobile application that allows users to e
 
 - **Image Sharing:** Users can send images to their contacts to share moments and experiences.
   
-  <div style="display: flex;">
-    <img src="https://github.com/BRobinson404/chat-app/assets/122922678/2f9750fc-37bd-4084-b3c8-a99c2548edb1" alt="Image Sharing 1" width="50%">
-    <img src="https://github.com/BRobinson404/chat-app/assets/122922678/b5366319-8088-491f-ad2f-c16e2eee5ed6" alt="Image Sharing 2" width="50%">
-  </div>
+  <div style="display: flex; flex-direction: row;">
+  <img src="https://github.com/BRobinson404/chat-app/assets/122922678/2f9750fc-37bd-4084-b3c8-a99c2548edb1" alt="Image Sharing 1" width="50%">
+  <img src="https://github.com/BRobinson404/chat-app/assets/122922678/b5366319-8088-491f-ad2f-c16e2eee5ed6" alt="Image Sharing 2" width="50%">
+</div>
+
 
 - **Location Sharing:** Users can share their current location with contacts to show where they are.
 - ![image](https://github.com/BRobinson404/chat-app/assets/122922678/036e164c-7d1b-4ae3-954a-6a0a3a9c8e7a)
