@@ -54,6 +54,3 @@ To get started with Chat-App, follow these steps:
 - React Native
 - Firebase
 - Expo SDK
-- ...
-
-- ...
