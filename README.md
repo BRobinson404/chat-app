@@ -14,14 +14,17 @@ Chat-App is a simple and user-friendly mobile application that allows users to e
 ## Key Features
 
 - **User Profile Setup:** Users can enter their name and choose a background color for the chat screen before joining the chat room.
-  ![image](https://github.com/BRobinson404/chat-app/assets/122922678/19fd275e-122a-46a8-9394-7d67f2bd9809)
+  
+  ![User Profile Setup](https://github.com/BRobinson404/chat-app/assets/122922678/19fd275e-122a-46a8-9394-7d67f2bd9809)
 
 - **Conversation Interface:** The app provides a conversation interface where users can view and send messages to friends and family.
-  ![image](https://github.com/BRobinson404/chat-app/assets/122922678/9f65b1d3-5afa-4b28-a50f-d724ac8fd8ff)
+  
+  ![Conversation Interface](https://github.com/BRobinson404/chat-app/assets/122922678/9f65b1d3-5afa-4b28-a50f-d724ac8fd8ff)
 
 - **Image Sharing:** Users can send images to their contacts to share moments and experiences.
-- ![image](https://github.com/BRobinson404/chat-app/assets/122922678/2f9750fc-37bd-4084-b3c8-a99c2548edb1)
-- ![image](https://github.com/BRobinson404/chat-app/assets/122922678/b5366319-8088-491f-ad2f-c16e2eee5ed6)
+  
+  ![Image Sharing 1](https://github.com/BRobinson404/chat-app/assets/122922678/2f9750fc-37bd-4084-b3c8-a99c2548edb1)
+  ![Image Sharing 2](https://github.com/BRobinson404/chat-app/assets/122922678/b5366319-8088-491f-ad2f-c16e2eee5ed6)
 
 - **Location Sharing:** Users can share their current location with contacts to show where they are.
 - **Offline Access:** Messages are stored locally and online, allowing users to access conversations even when offline.
@@ -37,6 +40,10 @@ To get started with Chat-App, follow these steps:
 
 ## Technologies Used
 
-- React Native: Building the mobile application.
-- Expo: Development environment and tooling.
-- Firebase: Storing and syncing user messages and data.
+- HTML
+- CSS
+- JavaScript
+- React Native
+- Firebase
+- Expo SDK
+- ...
